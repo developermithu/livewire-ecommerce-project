@@ -129,7 +129,7 @@
         <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
         <script src="{{asset('backend/assets/js/plugins/nouislider.min.js')}}"></script>
         <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
-        <script src="cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js')}}"></script>
+        <script src="cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
         <!-- Library for adding dinamically elements -->
         <script src="{{asset('backend/assets/js/plugins/arrive.min.js')}}"></script>
         <!--  Google Maps Plugin    -->
@@ -142,6 +142,7 @@
         <script src="{{asset('backend/assets/js/plugins/bootstrap-notify.js')}}"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+        {!! Toastr::message() !!}
         <script src="{{asset('backend/assets/js/material-dashboard.min6c54.js?v=2.2.2" type="text/javascript')}}"></script>
         <!-- Material Dashboard DEMO methods, don't include it in your project! -->
         <script>

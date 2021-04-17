@@ -2,9 +2,11 @@
 
 use App\Http\Livewire\Admin\AdminDashboard;
 use App\Http\Livewire\CartComponent;
+use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\ProductDetails;
+use App\Http\Livewire\SearchResult;
 use App\Http\Livewire\ShopComponent;
 use App\Http\Livewire\User\UserDashboard;
 use Illuminate\Support\Facades\Route;
@@ -22,10 +24,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeComponent::class);
 Route::get('/shop', ShopComponent::class);
-Route::get('/cart', CartComponent::class);
+Route::get('/cart', CartComponent::class)->name('product.cart');
 Route::get('/checkout', CheckoutComponent::class);
 
 Route::get('/product/{slug}', ProductDetails::class)->name('product.details');
+
+// shop page by category product
+Route::get('/product-category/{category_slug}', CategoryComponent::class)->name('product.category');
+
+// shop page by search result
+Route::get('/search', SearchResult::class)->name('product.search');
 
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

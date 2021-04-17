@@ -16,9 +16,9 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/bootstrap.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/owl.carousel.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/flexslider.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/chosen.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/style.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/color-03.css')}}">
+	<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     @livewireStyles
 </head>
 <body class="home-page home-01 ">
@@ -43,11 +43,12 @@
 	<script src="{{asset('frontend/assets/js/jquery-ui-1.12.4.minb8ff.js?ver=1.12.4')}}"></script>
 	<script src="{{asset('frontend/assets/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('frontend/assets/js/jquery.flexslider.js')}}"></script>
-	<script src="{{asset('frontend/assets/js/chosen.jquery.min.js')}}"></script>
 	<script src="{{asset('frontend/assets/js/owl.carousel.min.js')}}"></script>
 	<script src="{{asset('frontend/assets/js/jquery.countdown.min.js')}}"></script>
 	<script src="{{asset('frontend/assets/js/jquery.sticky.js')}}"></script>
 	<script src="{{asset('frontend/assets/js/functions.js')}}"></script>
+	<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+	{!! Toastr::message() !!}
     @livewireScripts
 </body>
 </html>

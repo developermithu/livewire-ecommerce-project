@@ -5,8 +5,8 @@
 
 			<div class="wrap-breadcrumb">
 				<ul>
-					<li class="item-link"><a href="#" class="link">home</a></li>
-					<li class="item-link"><span>Digital & Electronics</span></li>
+					<li class="item-link"><a href="/" class="link">home</a></li>
+					<li class="item-link"><span>Shop</span></li>
 				</ul>
 			</div>
 			<div class="row">
@@ -15,7 +15,9 @@
 
 					<div class="banner-shop">
 						<a href="#" class="banner-link">
-							<figure><img src="{{asset('frontend/assets/images/shop-banner.jpg')}}" alt=""></figure>
+							<figure>
+								<img src="{{asset('frontend/assets/images/shop-banner.jpg')}}" alt="">
+							</figure>
 						</a>
 					</div>
 
@@ -26,18 +28,18 @@
 						<div class="wrap-right">
 
 							<div class="sort-item orderby ">
-								<select name="orderby" class="use-chosen" >
-									<option value="menu_order" selected="selected">Default sorting</option>
-									<option value="popularity">Sort by popularity</option>
-									<option value="rating">Sort by average rating</option>
-									<option value="date">Sort by newness</option>
+								<select wire:model="sorting" class="sorting" >
+									<option value="default" selected="selected">Default</option>
+									{{-- <option value="popularity">Sort by popularity</option>
+									<option value="rating">Sort by average rating</option> --}}
+									<option value="date">Sort by new product</option>
 									<option value="price">Sort by price: low to high</option>
 									<option value="price-desc">Sort by price: high to low</option>
 								</select>
 							</div>
 
 							<div class="sort-item product-per-page">
-								<select name="post-per-page" class="use-chosen" >
+								<select wire:model="pageNumber" class="sorting" >
 									<option value="12" selected="selected">12 per page</option>
 									<option value="16">16 per page</option>
 									<option value="18">18 per page</option>
@@ -77,7 +79,7 @@
 										<div class="wrap-price">
                                             <span class="product-price">${{$product->regular_price}}</span>
                                         </div>
-										<a href="#" class="btn add-to-cart">Add To Cart</a>
+										<a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add To Cart</a>
 									</div>
 								</div>
 							</li>
@@ -106,7 +108,8 @@
 						<h2 class="widget-title">All Categories</h2>
 						<div class="widget-content">
 							<ul class="list-category">
-								<li class="category-item has-child-cate">
+
+								{{-- <li class="category-item has-child-cate">
 									<a href="#" class="cate-link">Fashion & Accessories</a>
 									<span class="toggle-control">+</span>
 									<ul class="sub-cate">
@@ -114,34 +117,15 @@
 										<li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
 										<li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
 									</ul>
-								</li>
-								<li class="category-item has-child-cate">
-									<a href="#" class="cate-link">Furnitures & Home Decors</a>
-									<span class="toggle-control">+</span>
-									<ul class="sub-cate">
-										<li class="category-item"><a href="#" class="cate-link">Batteries (22)</a></li>
-										<li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
-										<li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
-									</ul>
-								</li>
-								<li class="category-item has-child-cate">
-									<a href="#" class="cate-link">Digital & Electronics</a>
-									<span class="toggle-control">+</span>
-									<ul class="sub-cate">
-										<li class="category-item"><a href="#" class="cate-link">Batteries (22)</a></li>
-										<li class="category-item"><a href="#" class="cate-link">Headsets (16)</a></li>
-										<li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
-									</ul>
-								</li>
+								</li> --}}
+
+								@foreach ($categories as $category)
 								<li class="category-item">
-									<a href="#" class="cate-link">Tools & Equipments</a>
+									<a href="{{route('product.category', $category->slug)}}" class="cate-link">{{$category->name}}
+									</a>
 								</li>
-								<li class="category-item">
-									<a href="#" class="cate-link">Kid’s Toys</a>
-								</li>
-								<li class="category-item">
-									<a href="#" class="cate-link">Organics & Spa</a>
-								</li>
+								@endforeach
+
 							</ul>
 						</div>
 					</div><!-- Categories widget-->
