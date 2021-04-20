@@ -1,4 +1,4 @@
-<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -18,7 +18,10 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/flexslider.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/style.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('frontend/assets/css/color-03.css')}}">
+	<!-- CDN -->
 	<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
+	@stack('css')
     @livewireStyles
 </head>
 <body class="home-page home-01 ">
@@ -49,6 +52,8 @@
 	<script src="{{asset('frontend/assets/js/functions.js')}}"></script>
 	<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 	{!! Toastr::message() !!}
+	
+	@stack('js')
     @livewireScripts
 </body>
 </html>

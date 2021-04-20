@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Livewire\Admin\AdminDashboard;
+use App\Http\Livewire\Admin\Category\CategoryManagement;
+use App\Http\Livewire\Admin\Products\ProductList;
+use App\Http\Livewire\Admin\Products\ProductAdd;
+use App\Http\Livewire\Admin\Products\ProductUpdate;
+use App\Http\Livewire\Admin\SaleTimer;
 use App\Http\Livewire\CartComponent;
 use App\Http\Livewire\CategoryComponent;
 use App\Http\Livewire\CheckoutComponent;
@@ -46,4 +51,15 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'verified', 'AuthAdmin'])->group(function () {
     Route::get('/admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
+
+    // Category
+    Route::get('/admin/category', CategoryManagement::class)->name('admin.category');
+
+    // Product
+    Route::get('/admin/products', ProductList::class)->name('admin.products');
+    Route::get('/admin/product/add', ProductAdd::class)->name('admin.products.add');
+    Route::get('/admin/product/edit/{product_slug}', ProductUpdate::class)->name('admin.products.edit');
+
+    // Sale Timer
+    Route::get('/admin/sale-timer', SaleTimer::class)->name('admin.sale-timer');
 });

@@ -16,13 +16,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->string('short_description')->nullable();
             $table->text('description');
             $table->decimal('regular_price');
-            $table->decimal('sale_price');
-            $table->string('sku');
+            $table->decimal('sale_price')->nullable();
+            $table->string('sku')->unique();
             $table->string('qty');
             $table->enum('stock_status', ['instock', 'outofstock'])->nullable();
             $table->boolean('featured')->default(false);

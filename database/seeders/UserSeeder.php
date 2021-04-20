@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sale;
 use App\Models\User;
+use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
@@ -31,6 +33,12 @@ class UserSeeder extends Seeder
             'email_verified_at' => Date::now(),
             'password' => Hash::make('user'),
             'utype' => 'USER',
+        ]);
+
+        // Sale Time Seeder
+        Sale::updateOrCreate([
+            'sale_time' => Date::now(),
+            'status' => false,
         ]);
     }
 }

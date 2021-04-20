@@ -57,13 +57,28 @@ Dashboard
 </a>
 </li>
 
-{{-- <li class="nav-item {{request()->is('admin/users') ? 'active' : ""}} ">
-    <a class="nav-link" href="{{route('admin.users')}}">
-        <i class="material-icons">group</i>
-        <p>User</p>
+<li class="nav-item {{request()->is('admin/category') ? 'active' : ""}} ">
+    <a class="nav-link" href="{{route('admin.category')}}">
+        <i class="material-icons">list</i>
+        <p>Category</p>
     </a>
-    </li>
+</li>
 
+<li class="nav-item {{Route::is('admin.products*') ? 'active' : ""}} ">
+    <a class="nav-link" href="{{route('admin.products')}}">
+        <i class="material-icons">local_mall</i>
+        <p>Product</p>
+    </a>
+</li>
+
+<li class="nav-item {{Route::is('admin.sale-timer*') ? 'active' : ""}} ">
+    <a class="nav-link" href="{{route('admin.sale-timer')}}">
+        <i class="material-icons">local_mall</i>
+        <p>Sale Timer</p>
+    </a>
+</li>
+
+{{-- 
 <li class="nav-item {{request()->is('admin/appointments*') ? 'active' : ""}} ">
     <a class="nav-link" href="{{route('admin.appointments')}}">
         <i class="material-icons">calendar_view_month</i>
@@ -110,14 +125,8 @@ Dashboard
 </a>
 </li>
 
-{{-- <li class="nav-item {{ request()->is('admin/test*') ? 'active' : '' }} ">
-<a class="nav-link" href="{{route('admin.test')}}">
-    <i class="material-icons">date_range</i>
-    <p>Test</p>
-</a>
-</li> --}}
-
 </ul>
 </div>
-<div class="sidebar-background"></div>
+<div class="sidebar-background" style="background-image: url({{asset('frontend/assets/img/sidebar-1.jpg')}})">
+</div>
 </div>

@@ -41,10 +41,14 @@
         <link rel="stylesheet" href="" />
         <!-- Fontawesome CDN -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-        <!-- Toastr CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"/>
         <!-- CSS Files -->
         <link href="{{asset('backend/assets/css/material-dashboard.min6c54.css?v=2.2.2')}}" rel="stylesheet" />
+        
+          <!-- All CDN -->
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        @stack('css')
         @livewireStyles
     </head>
 
@@ -103,26 +107,23 @@
         <script src="{{asset('backend/assets/js/core/jquery.min.js')}}"></script>
         <script src="{{asset('backend/assets/js/core/popper.min.js')}}"></script>
         <script src="{{asset('backend/assets/js/core/bootstrap-material-design.min.js')}}"></script>
+        <!-- perfect-scrollbar for sidebar collapse -->
         <script src="{{asset('backend/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
-        <!-- Plugin for the momentJs  -->
+        <!-- Plugin for the DateTime Picker Css Already Included Default-->
         <script src="{{asset('backend/assets/js/plugins/moment.min.js')}}"></script>
-        <!--  Plugin for Sweet Alert -->
+        <script src="{{asset('backend/assets/js/plugins/bootstrap-datetimepicker.min.js')}}"></script>
         <script src="{{asset('backend/assets/js/plugins/sweetalert2.js')}}"></script>
-        <!-- Forms Validations Plugin -->
-        <script src="{{asset('backend/assets/js/plugins/jquery.validate.min.js')}}"></script>
-        <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
+        <!-- Pugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
         <script src="{{asset('backend/assets/js/plugins/jquery.bootstrap-wizard.js')}}"></script>
         <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-        <script src="{{asset('backend/assets/js/plugins/bootstrap-selectpicker.js')}}"></script>
-        <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-        <script src="{{asset('backend/assets/js/plugins/bootstrap-datetimepicker.min.js')}}"></script>
+        {{-- <script src="{{asset('backend/assets/js/plugins/bootstrap-selectpicker.js')}}"></script> --}}
         <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
         <script src="{{asset('backend/assets/js/plugins/jquery.dataTables.min.js')}}"></script>
         <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
         <script src="{{asset('backend/assets/js/plugins/bootstrap-tagsinput.js')}}"></script>
         <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
         <script src="{{asset('backend/assets/js/plugins/jasny-bootstrap.min.js')}}"></script>
-        <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
+        <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar-->
         <script src="{{asset('backend/assets/js/plugins/fullcalendar.min.js')}}"></script>
         <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
         <script src="{{asset('backend/assets/js/plugins/jquery-jvectormap.js')}}"></script>
@@ -136,63 +137,12 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2Yno10-YTnLjjn_Vtk0V8cdcY5lC4plU"></script>
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async defer src="buttons.github.io/buttons.js"></script>
-        <!-- Chartist JS -->
-        <script src="{{asset('backend/assets/js/plugins/chartist.min.js')}}"></script>
-        <!--  Notifications Plugin    -->
-        <script src="{{asset('backend/assets/js/plugins/bootstrap-notify.js')}}"></script>
-        <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+
+        <script src="{{asset('backend/assets/js/material-dashboard.min6c54.js?v=2.2.2" type="text/javascript')}}"></script>
+
+        <!-- All CDN -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
         {!! Toastr::message() !!}
-        <script src="{{asset('backend/assets/js/material-dashboard.min6c54.js?v=2.2.2" type="text/javascript')}}"></script>
-        <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-        <script>
-            $(document).ready(function () {
-                $("#datatables").DataTable({
-                    pagingType: "full_numbers",
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        [10, 25, 50, "All"],
-                    ],
-                    responsive: true,
-                    language: {
-                        search: "INPUT",
-                        searchPlaceholder: "Search records",
-                    },
-                });
-
-                var table = $("#datatables").DataTable();
-
-                // Edit record
-
-                table.on("click", ".edit", function () {
-                    $tr = $(this).closest("tr");
-
-                    if ($($tr).hasClass("child")) {
-                        $tr = $tr.prev(".parent");
-                    }
-
-                    var data = table.row($tr).data();
-                    alert("You press on Row: " + data[0] + " " + data[1] + " " + data[2] + "'s row.");
-                });
-                // Delete a record
-                table.on("click", ".remove", function (e) {
-                    $tr = $(this).closest("tr");
-
-                    if ($($tr).hasClass("child")) {
-                        $tr = $tr.prev(".parent");
-                    }
-
-                    table.row($tr).remove().draw();
-                    e.preventDefault();
-                });
-
-                //Like record
-
-                table.on("click", ".like", function () {
-                    alert("You clicked on Like button");
-                });
-            });
-        </script>
 
 {{-- My Custom JS --}}
         <script>
@@ -205,30 +155,25 @@
                 $('#form').modal('hide');
                 toastr.success(e.detail.message);
             })
+
+             // dispatchBrowserEvent
+             window.addEventListener('show-form', e => {
+                $('#form').modal('show');
+            })
+            window.addEventListener('hide-form', e => {
+                $('#form').modal('hide');
+            })
+            window.addEventListener('show-delete-modal', e => {
+                $('#confirmationModal').modal('show');
+            })
+            window.addEventListener('hide-delete-modal', e => {
+                $('#confirmationModal').modal('hide');
+                toastr.success(e.detail.message);
+            })
            });
         </script>
-        <script>
-            // dispatchBrowserEvent
-            // window.addEventListener('show-form', event => {
-            //     $('#form').modal('show');
-            // })
-            // window.addEventListener('hide-form', e => {
-            //     $('#form').modal('hide');
-            // })
-            // window.addEventListener('show-delete-modal', e => {
-            //     $('#confirmationModal').modal('show');
-            // })
-            // window.addEventListener('hide-delete-modal', e => {
-            //     $('#confirmationModal').modal('hide');
-            //     toastr.success(e.detail.message);
-            // })
 
-            // // Appointment Date
-            // $('#appointmentDate').on("change.datetimepicker", function (e) {
-            //     let date = $(this).data('appointmentdate');
-            //     eval(date).set('state.date', $('#appointmentDateInput').val());
-            // })
-        </script>
+@stack('js')
 
 @livewireScripts
     </body>
