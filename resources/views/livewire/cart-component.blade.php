@@ -78,26 +78,74 @@
 							<span class="title">Subtotal</span>
 							<b class="index">$ {{ Cart::subtotal() }} </b>
 						</p>
+					@if ( Session::has('coupon') )
 						<p class="summary-info">
-							<span class="title">Tax</span>
-							<b class="index">$ {{ Cart::tax() }} </b>
+								<span class="title">Discount ({{Session::get('coupon')['code']}}) </span> <a href="#" wire:click.prevent="removeCoupon" class="text-danger">Cancel</a>
+								<b class="index"> - ${{number_format($discount, 2)}} </b>
 						</p>
 						<p class="summary-info">
-							<span class="title">Shipping</span>
-							<b class="index">Free Shipping</b>
+								<span class="title">Subtotal With Discount</span>
+								<b class="index">$ {{number_format($subtotal_after_discount, 2)}}  </b>
+						</p>
+						<p class="summary-info">
+								<span class="title">Tax ({{config('cart.tax')}}%) </span>
+								<b class="index">$ {{number_format($tax_after_discount, 2)}} </b>
+						</p>
+						<p class="summary-info">
+								<span class="title">Shipping</span>
+								<b class="index">Free Shipping</b>
 						</p>
 						<p class="summary-info total-info ">
-							<span class="title">Total</span>
-							<b class="index">$ {{ Cart::total() }} </b>
+								<span class="title">Total</span>
+								<b class="index">$ {{number_format($total_after_discount, 2)}} </b>
 						</p>
+						@else 
+							<p class="summary-info">
+								<span class="title">Tax ({{config('cart.tax')}}%) </span>
+								<b class="index">$ {{ Cart::tax() }} </b>
+							</p>
+							<p class="summary-info">
+								<span class="title">Shipping</span>
+								<b class="index">Free Shipping</b>
+							</p>
+							<p class="summary-info total-info ">
+								<span class="title">Total</span>
+								<b class="index">$ {{ Cart::total() }} </b>
+							</p>
+					@endif
 					</div>
 
 					<div class="checkout-info">
+
+					@if ( !Session::has('coupon'))
 						<label class="checkbox-field">
-							<input class="frm-input " name="have-code" id="have-code" value="" type="checkbox"><span>I have promo code</span>
+							<input class="frm-input" name="have-code" value="1" wire:model="haveCouponCode" type="checkbox">
+							<span>I have coupon code</span>
 						</label>
+
+						@if ( $haveCouponCode == 1 )
+						<div class="summary-item">
+							<form wire:submit.prevent="applyCouponCode">
+								<h4> Coupon Code </h4>
+								@if (Session::has('coupon_message'))
+									<div class="alert alert-danger">
+										 {{Session::get("coupon_message")}} 
+								</div>
+								@endif
+								<p class="row-in-form">
+									<input type="text" wire:model="applyCode" placeholder="Enter your coupon code">
+								@error('applyCode')
+									<div class="text-danger">{{$message}} </div>
+								@enderror
+								</p>
+								<button type="submit" class="btn btn-info"> Apply </button>
+							</form>
+						</div>
+						@endif
+			     @endif
 						<a class="btn btn-checkout" href="checkout.html">Check out</a>
 					</div>
+
 					<div class="update-clear m-auto text-center">
 						<div>	
 							<a class="btn btn-clear" wire:click.prevent="destroyAll()">Clear Shopping Cart</a>

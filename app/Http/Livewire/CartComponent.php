@@ -2,13 +2,21 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Sale;
+use Carbon\Carbon;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
 class CartComponent extends Component
 {
+    public $haveCouponCode;
+    public $applyCode;  //from coupon user form
+    public $discount;
+    public $subtotal_after_discount;
+    public $tax_after_discount;
+    public $total_after_discount;
 
     public function increaseCartQuantity($rowId)
     {
@@ -66,8 +74,72 @@ class CartComponent extends Component
         $this->emitTo('cart-count-component', 'refreshComponent');
     }
 
+    //=======  Coupon Applying ==========//
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'applyCode' => 'required'
+        ], ['applyCode.required' => 'Field is required']);
+    }
+
+    public function applyCouponCode()
+    {
+        $this->validate([
+            'applyCode' => 'required'
+        ], ['applyCode.required' => 'Field is required']);
+
+        $coupon = Coupon::where('code', $this->applyCode)
+            ->where('expiry_date', '>=', Carbon::today())->first();
+
+        if (!$coupon) {
+            session()->flash('coupon_message', 'Opps! coupon code is invalid!');
+            return;
+        }
+        if (Cart::instance('cart')->subtotal() < $coupon->cart_min_price) {
+            session()->flash('coupon_message', 'Subtotal price should be greater than $' . $coupon->cart_min_price);
+            return;
+        }
+
+        session()->put('coupon', [
+            'code' => $coupon->code,
+            'type' => $coupon->type,
+            'value' => $coupon->value,
+            'cart_min_price' => $coupon->cart_min_price
+        ]);
+    }
+
+    // Call this into render method
+    public function calculateDiscounts()
+    {
+        if (session()->has('coupon')) {
+            if (session()->get('coupon')['type'] == 'fixed') {
+                $this->discount = session()->get('coupon')['value'];
+            } else {
+                $this->discount = (Cart::instance('cart')->subtotal() * session()->get('coupon')['value']) / 100;
+            }
+            // Calculation
+            $this->subtotal_after_discount = Cart::instance('cart')->subtotal() - $this->discount;
+            $this->tax_after_discount = ($this->subtotal_after_discount * config('cart.tax')) / 100;
+            $this->total_after_discount = $this->subtotal_after_discount + $this->tax_after_discount;
+        }
+    }
+
+    public function removeCoupon()
+    {
+        session()->forget('coupon');
+    }
+
     public function render()
     {
+
+        if (session()->has('coupon')) {
+            if (Cart::instance('cart')->subtotal() < session()->get('coupon')['cart_min_price']) {
+                session()->forget('coupon');
+            } else {
+                $this->calculateDiscounts();
+            }
+        }
+
         $sale = Sale::find(1);
         return view('livewire.cart-component', compact('sale'))->layout('layouts.frontend.base');
     }

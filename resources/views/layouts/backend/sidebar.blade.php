@@ -78,6 +78,13 @@ Dashboard
     </a>
 </li>
 
+<li class="nav-item {{Route::is('admin.coupons*') ? 'active' : ""}} ">
+    <a class="nav-link" href="{{route('admin.coupons')}}">
+        <i class="material-icons">local_mall</i>
+        <p>Coupons</p>
+    </a>
+</li>
+
 {{-- 
 <li class="nav-item {{request()->is('admin/appointments*') ? 'active' : ""}} ">
     <a class="nav-link" href="{{route('admin.appointments')}}">
