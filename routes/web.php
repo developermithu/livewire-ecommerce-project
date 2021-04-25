@@ -14,6 +14,7 @@ use App\Http\Livewire\ProductDetails;
 use App\Http\Livewire\SearchResult;
 use App\Http\Livewire\ShopComponent;
 use App\Http\Livewire\User\UserDashboard;
+use App\Http\Livewire\WishlistComponent;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeComponent::class);
 Route::get('/shop', ShopComponent::class);
 Route::get('/cart', CartComponent::class)->name('product.cart');
+Route::get('/wishlist', WishlistComponent::class)->name('product.wishlist');
 Route::get('/checkout', CheckoutComponent::class);
 
 Route::get('/product/{slug}', ProductDetails::class)->name('product.details');

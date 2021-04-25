@@ -1,0 +1,16 @@
+.product-wishlist {
+    position: top;
+    position: absolute;
+    top: 8%;
+    font-size: 30px;
+    right: 30px;
+}
+.product-wishlist a {
+    color: #aaa;
+}
+.product-wishlist a:hover {
+    color: #ff42b3;
+}
+.product-wishlist .fill-heart {
+    color: #ff42b3;
+}

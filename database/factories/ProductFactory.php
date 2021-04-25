@@ -29,12 +29,13 @@ class ProductFactory extends Factory
             'slug' => $slug,
             'short_description' => $this->faker->text(200),
             'description' => $this->faker->text(1000),
-            'regular_price' => $this->faker->numberBetween(10, 500),
+            'regular_price' => $this->faker->numberBetween(50, 1000),
             // 'sale_price' => $this->faker->numberBetween(10, 300), //nullable
             'sku' => 'DIGI' . $this->faker->unique()->numberBetween(1, 500),
             'stock_status' => 'instock',
             'qty' => $this->faker->numberBetween(5, 100),
             'image' => 'digital_' . $this->faker->numberBetween(10, 22) . '.jpg',
+            // 'image' => 'default.png',
             'category_id' => $this->faker->numberBetween(1, 10),
         ];
     }

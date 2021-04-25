@@ -66,27 +66,58 @@
 					<div class="row">
 						<ul class="product-list grid-products equal-container">
 
+						@php
+							$wishItems = Cart::instance('wishlist')->content()->pluck('id');
+						@endphp
+
                             @foreach ($products as $product)
 							<li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
 								<div class="product product-style-3 equal-elem ">
 									<div class="product-thumnail">
 										<a href="{{ route('product.details', $product->slug) }}" title="T-Shirt Raw Hem Organic Boro Constrast Denim">
 											<figure>
-                                                <img src="{{asset('frontend/assets/images/products')}}/{{$product->image}}" alt="{{$product->slug}}">
+                                                <img src="{{asset('storage/media/products/' .$product->image)}}" alt="{{$product->slug}}">
                                             </figure>
 										</a>
 									</div>
 									<div class="product-info">
-										<a href="#" class="product-name">
+										<a href="{{ route('product.details', $product->slug) }}" class="product-name">
                                             <span> {{$product->name}} </span>
                                         </a>
 										<div class="wrap-price">
-                                            <span class="product-price">${{$product->regular_price}}</span>
-                                        </div>
-										<a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add To Cart</a>
+											@if ($product->sale_price> 0 && $sale->status == 1 && $sale->sale_time > Carbon\Carbon::now() )
+											<span class="product-price">${{ $product->sale_price }} </span>
+											<span class="delete">
+												<del>${{ $product->regular_price }} </del>
+											</span>
+											@else
+											<span class="product-price">${{ $product->regular_price }} </span>
+											@endif  
+										</div>
+
+									{{-- Sale Price Thakle Sale Price Add to cart e jabe --}}
+										@if ($product->sale_price> 0 && $sale->status == 1 && $sale->sale_time > Carbon\Carbon::now() )
+											<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->sale_price}})">Add to Cart</a>
+											@else
+											<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add to Cart</a>
+										@endif
+
+										<div class="product-wishlist">
+											@if ( $wishItems->contains($product->id ))
+											<a href="javascript:void(0)" wire:click.prevent="removeFromWishlist({{$product->id}})">
+												<i class="fas fa-heart fill-heart"></i>
+											</a>
+											 @else 
+											 <a href="javascript:void(0)" wire:click.prevent="addToWishlist({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">
+												 <i class="fas fa-heart "></i>
+												</a>
+											@endif
+											
+										</div>
 									</div>
 								</div>
 							</li>
+
                             @endforeach
 
 						</ul>
@@ -122,7 +153,7 @@
 										<li class="category-item"><a href="#" class="cate-link">Screen (28)</a></li>
 									</ul>
 								</li> --}}
-
+							
 								@foreach ($categories as $category)
 								<li class="category-item">
 									<a href="{{route('product.category', $category->slug)}}" class="cate-link">{{$category->name}}

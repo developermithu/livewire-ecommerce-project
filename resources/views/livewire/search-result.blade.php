@@ -69,7 +69,7 @@
 									<div class="product-thumnail">
 										<a href="{{ route('product.details', $product->slug) }}" title="T-Shirt Raw Hem Organic Boro Constrast Denim">
 											<figure>
-                                                <img src="{{asset('frontend/assets/images/products')}}/{{$product->image}}" alt="{{$product->slug}}">
+												<img src="{{asset('storage/media/products/' .$product->image)}}" alt="{{$product->slug}}">
                                             </figure>
 										</a>
 									</div>

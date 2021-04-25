@@ -43,8 +43,8 @@
                         </a>
                     </td>
                         <td>
-                          <a href="{{asset('frontend/assets/images/products')}}/{{$product->image}}" target="_blank">
-                          <img src="{{asset('frontend/assets/images/products')}}/{{$product->image}}" alt="photo" width="40px">
+                          <a href="{{asset('storage/media/products/' .$product->image)}}" target="_blank">
+                            <img src="{{asset('storage/media/products/' .$product->image)}}" alt="photo" width="40px">
                         </a>
                         </td>
                         <td>{{$product->category->name}}</td>

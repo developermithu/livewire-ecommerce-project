@@ -1,3 +1,7 @@
+@push('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" />
+@endpush
+
 <div>
     <div class="row">
         <div class="col-md-12">
@@ -50,21 +54,25 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group bmd-form-group">
-                                <textarea wire:model="short_description" class="form-control" placeholder="Short Description">
-                                </textarea>
-                                @error('short_description')
-                                <label class="error">{{$message}}</label>
-                                @enderror
+                            <div wire:ignore>
+                                <div class="form-group bmd-form-group">
+                                    <textarea wire:model="short_description" id="short_description" class="form-control" placeholder="Short Description">
+                                    </textarea>
+                                </div>
                             </div>
+                            @error('short_description')
+                            <label class="text-danger">{{$message}}</label>
+                            @enderror
 
-                            <div class="form-group bmd-form-group">
-                                <textarea wire:model="description" class="form-control" placeholder="Description *">
-                                </textarea>
-                                @error('description')
-                                <label class="error">{{$message}}</label>
-                                @enderror
+                            <div wire:ignore>
+                                <div class="form-group bmd-form-group">
+                                    <textarea wire:model="description" id="description" class="form-control" placeholder="Description *">
+                                    </textarea>
+                                </div>
                             </div>
+                            @error('description')
+                            <label class="text-danger">{{$message}}</label>
+                            @enderror
 
                             <div class="category form-category text-danger">* Required fields</div>
                         </div>
@@ -120,42 +128,59 @@
                                     <label class="text-danger">{{$message}}</label>
                                     @enderror
 
-                                    <input wire:model="newImage" type="file" class="form-control mt-3">
-                                    @error('newImage')
-                                    <label class="text-danger">{{$message}}</label>
-                                    @enderror
-
+                            <div class="fileinput fileinput-new text-center mt-3 m-auto" data-provides="fileinput" wire:ignore>
+                                <div class="fileinput-new thumbnail mt-3">
                                     @if ($newImage)
-                                        <img src="{{$newImage->temporaryUrl()}}" alt="newImage" width="120px">
-                                    @else
-                                        <img src="{{asset('frontend/assets/images/products')}}/{{$image}}" alt="image" width="120px">
-                                    @endif
-
-                                {{-- <div class="fileinput fileinput-new text-center mt-3" data-provides="fileinput">
-                                    {{-- <div class="fileinput-new thumbnail">
-                                      <img src="https://via.placeholder.com/200" alt="...">
-                                    </div> 
-                                    <div class="fileinput-preview fileinput-exists thumbnail"></div>
-                                    <div>
-                                      <span class="btn btn-rose btn-file">
-                                        <span class="fileinput-new">Upload Product Image</span>
-                                        <span class="fileinput-exists">Change</span>
-                                        <input type="file" wire:model.defer="image"/> 
-                                      </span>
-                                      <a href="#pablo" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                    </div>
-                                        @error('image')
-                                        <label class="text-danger ml-0">{{$message}}</label>
-                                        @enderror
-                            </div> --}}
+                                    <img src="{{$newImage->temporaryUrl()}}" alt="newImage" width="120px">
+                                @else
+                                    <img src="{{asset('storage/media/products/' .$image)}}" alt="image" width="120px">
+                                @endif
+                                  </div> 
+                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                <div>
+                                <span class="btn btn-primary btn-file text-center">
+                                    <span class="fileinput-new">
+                                        <span class="material-icons mr-2">image </span>
+                                        Change Image
+                                    </span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input wire:model="newImage" type="file" class="form-control mt-3">
+                                </span>
+                                <a href="#pablo" class="btn btn-rose fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                </div> 
+                        </div> 
+                        @error('newImage')
+                        <label class="text-danger ml-0">{{$message}}</label>
+                        @enderror
+                            
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-
-
 </div>
 
-
+@push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+<script>
+    $(document).ready(function() {
+         $('#description').summernote({
+                    minHeight: 160,
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('description', contents);
+                        }
+                    }
+          });
+         $('#short_description').summernote({
+                    minHeight: 100,
+                    callbacks: {
+                        onChange: function(contents, $editable) {
+                            @this.set('short_description', contents);
+                        }
+                    }
+          });
+    });
+</script>
+@endpush

@@ -63,7 +63,7 @@
 							<div class="product-thumnail">
 								<a href="{{route('product.details', $on_sale_product->slug)}}">
 									<figure>
-										<img src="{{asset('frontend/assets/images/products')}}/{{$on_sale_product->image}}" width="800" height="800" alt="{{$on_sale_product->name}}">
+										<img src="{{asset('storage/media/products/' .$on_sale_product->image)}}" width="800" height="800" alt="{{$on_sale_product->name}}">
 									</figure>
 								</a>
 								<div class="group-flash">
@@ -114,7 +114,7 @@
 										<div class="product-thumnail">
 											<a href="{{ route('product.details', $latest_product->slug)}}">
 												<figure>
-													<img src="{{asset('frontend/assets/images/products')}}/{{$latest_product->image}}" alt="{{$latest_product->slug}}" width="800" height="800">
+													<img src="{{asset('storage/media/products/' .$latest_product->image)}}" alt="{{$latest_product->slug}}" width="800" height="800">
 												</figure>
 											</a>
 											<div class="group-flash">
@@ -175,7 +175,7 @@
 										<div class="product-thumnail">
 											<a href="{{route('product.details', $product->slug)}}">
 												<figure>
-													<img src="{{asset('frontend/assets/images/products')}}/{{$product->image}}" width="800" height="800" alt="{{$product->slug}}">
+													<img src="{{asset('storage/media/products/' .$product->image)}}" width="800" height="800" alt="{{$product->slug}}">
 												</figure>
 											</a>
 											<div class="group-flash">
@@ -186,11 +186,11 @@
 											</div>
 										</div>
 										<div class="product-info">
-											<a href="#" class="product-name">
+											<a href="{{route('product.details', $product->slug)}}" class="product-name">
 												<span>{{$product->name}}</span>
 											</a>
 											<div class="wrap-price">
-												<span class="product-price">${{$product->sale_price}}</span>
+												<span class="product-price">${{$product->regular_price}}</span>
 											</div>
 										</div>
 									</div>

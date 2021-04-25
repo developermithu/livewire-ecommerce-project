@@ -28,6 +28,24 @@ class ProductAdd extends Component
     public $image;
     // public $images;
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required | unique:products',
+            'slug' => 'required | unique:products',
+            'sku' => 'required | unique:products',
+            'regular_price' => 'required | numeric',
+            'sale_price' => 'nullable | numeric',
+            'qty' => 'required | numeric',
+            'short_description' => 'nullable | string | max:250',
+            'description' => 'required | string',
+            'category_id' => 'required',
+            'stock_status' => 'required',
+            'featured' => 'required',
+            'image' => 'required | image | mimes:png,jpg,jpeg | max:1048',
+        ]);
+    }
+
     public function generateSlug()
     {
         $this->slug = Str::slug($this->name);
@@ -40,22 +58,16 @@ class ProductAdd extends Component
             'slug' => 'required | unique:products',
             'sku' => 'required | unique:products',
             'regular_price' => 'required | numeric',
-            'sale_price' => 'sometimes | numeric',
+            'sale_price' => 'nullable | numeric',
             'qty' => 'required | numeric',
             'short_description' => 'nullable | string | max:250',
             'description' => 'required | string',
             'category_id' => 'required',
             'stock_status' => 'required',
             'featured' => 'required',
-            'image' => 'required | image | max:2048',
+            'image' => 'required | image | mimes:png,jpg,jpeg | max:1048',
             // 'images' => 'nullable | image | mimes:png,jpg,jpeg | max:2048',
         ]);
-
-        // if (!Storage::disk('public')->exists('media/products')) {
-        //     Storage::disk('public')->makeDirectory('media/products');
-        // }
-        // Storage::disk('public')->put('media/products/' . $imgName, 'public');
-        // 'root' => public_path('frontendassets/images'), in filesystem
 
         $product = new Product();
         $product->name                      =     $this->name;
@@ -72,7 +84,7 @@ class ProductAdd extends Component
 
         if ($this->image) {
             $imgName = uniqid() . '.' . $this->image->extension();
-            $this->image->storeAs('products', $imgName);
+            $this->image->storeAs('/media/products', $imgName, 'public');
             $product->image = $imgName;
         }
 

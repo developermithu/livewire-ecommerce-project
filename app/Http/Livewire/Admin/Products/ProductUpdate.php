@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Products;
 use App\Models\Category;
 use App\Models\Product;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -47,6 +48,24 @@ class ProductUpdate extends Component
         $this->product_id =  $product->id;
     }
 
+    public function updated($fields)
+    {
+        $this->validateOnly($fields, [
+            'name' => 'required | unique:products,name,' . $this->product_id,
+            'slug' => 'required | unique:products,slug,' . $this->product_id,
+            'sku' => 'required | unique:products,sku,' . $this->product_id,
+            'regular_price' => 'required | numeric',
+            'sale_price' => 'nullable | numeric',
+            'qty' => 'required | numeric',
+            'short_description' => 'nullable | string | max:250',
+            'description' => 'required | string',
+            'category_id' => 'required',
+            'stock_status' => 'required',
+            'featured' => 'required',
+            'newImage' => 'nullable | image | mimes:png,jpg,jpeg | max:1048',
+        ]);
+    }
+
     public function generateSlug()
     {
         $this->slug = Str::slug($this->name);
@@ -54,21 +73,21 @@ class ProductUpdate extends Component
 
     public function update()
     {
-        // $this->validate([
-        //     'name' => 'required',
-        //     'slug' => 'required',
-        //     'sku' => 'required',
-        //     'regular_price' => 'required | numeric',
-        //     'sale_price' => 'sometimes | numeric',
-        //     'qty' => 'required | numeric',
-        //     'short_description' => 'nullable | string | max:250',
-        //     'description' => 'required | string',
-        //     'category_id' => 'required',
-        //     'stock_status' => 'required',
-        //     'featured' => 'required',
-        //     'image' => 'sometimes | image | max:2048',
-        //     // 'images' => 'nullable | image | mimes:png,jpg,jpeg | max:2048',
-        // ]);
+        $this->validate([
+            'name' => 'required | unique:products,name,' . $this->product_id,
+            'slug' => 'required | unique:products,slug,' . $this->product_id,
+            'sku' => 'required | unique:products,sku,' . $this->product_id,
+            'regular_price' => 'required | numeric',
+            'sale_price' => 'nullable | numeric',
+            'qty' => 'required | numeric',
+            'short_description' => 'nullable | string | max:250',
+            'description' => 'required | string',
+            'category_id' => 'required',
+            'stock_status' => 'required',
+            'featured' => 'required',
+            'newImage' => 'nullable | image | mimes:png,jpg,jpeg | max:1048',
+            // 'images' => 'nullable | image | mimes:png,jpg,jpeg | max:2048',
+        ]);
 
         $product = Product::find($this->product_id);
         $product->name                      =     $this->name;
@@ -85,7 +104,7 @@ class ProductUpdate extends Component
 
         if ($this->newImage) {
             $imgName = uniqid() . '.' . $this->newImage->extension();
-            $this->newImage->storeAs('products', $imgName);
+            $this->newImage->storeAs('media/products', $imgName, 'public');
             $product->image = $imgName;
         }
 

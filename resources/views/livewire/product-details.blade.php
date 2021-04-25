@@ -18,8 +18,8 @@
 							<div class="product-gallery">
 							  <ul class="slides">
 
-							    <li data-thumb="{{asset('frontend/assets/images/products')}}/{{$product->image}}">
-							    	<img src="{{asset('frontend/assets/images/products')}}/{{$product->image}}" />
+							    <li data-thumb="{{asset('storage/media/products/' .$product->image)}}">
+							    	<img src="{{asset('storage/media/products/' .$product->image)}}" />
 							    </li>
 
 							  </ul>
@@ -56,12 +56,12 @@
 								</p>
                             </div>
                             <div class="quantity">
-                            	<span>Quantity:</span>  {{ $product->qty }} 
+                            	<span>Quantity:  <b>{{ $qty }}</b>  </span>  
 								<div class="quantity-input">
-									<input type="text" name="product-quatity" value="1" data-max="120" pattern="[0-9]*" >
+									<input type="number" name="product-quatity" value="1" data-max="120" pattern="[0-9]*" wire:model="qty">
 									
-									<a class="btn btn-reduce" href="#"></a>
-									<a class="btn btn-increase" href="#"></a>
+									<a class="btn btn-reduce" wire:click.prevent="decreaseQty"></a>
+									<a class="btn btn-increase" wire:click.prevent="increaseQty"></a>
 								</div>
 							</div>
 							<div class="wrap-butons">
@@ -197,7 +197,7 @@
 										<div class="right-content">
 											<b class="title">Free Shipping</b>
 											<span class="subtitle">On Oder Over $99</span>
-											<p class="desc">Lorem Ipsum is simply dummy text of the printing...</p>
+											{{-- <p class="desc">Lorem Ipsum is simply dummy text of the printing...</p> --}}
 										</div>
 									</a>
 								</li>
@@ -208,7 +208,7 @@
 										<div class="right-content">
 											<b class="title">Special Offer</b>
 											<span class="subtitle">Get a gift!</span>
-											<p class="desc">Lorem Ipsum is simply dummy text of the printing...</p>
+											{{-- <p class="desc">Lorem Ipsum is simply dummy text of the printing...</p> --}}
 										</div>
 									</a>
 								</li>
@@ -219,7 +219,7 @@
 										<div class="right-content">
 											<b class="title">Order Return</b>
 											<span class="subtitle">Return within 7 days</span>
-											<p class="desc">Lorem Ipsum is simply dummy text of the printing...</p>
+											{{-- <p class="desc">Lorem Ipsum is simply dummy text of the printing...</p> --}}
 										</div>
 									</a>
 								</li>
@@ -238,7 +238,7 @@
 										<div class="thumbnnail">
 											<a href="{{route('product.details', $popular_product->slug)}}">
 												<figure>
-                                                    <img src="{{asset('frontend/assets/images/products')}}/{{$popular_product->image}}" alt="">
+                                                    <img src="{{asset('storage/media/products/' .$popular_product->image)}}" alt="{{$popular_product->slug}}">
                                                 </figure>
 											</a>
 										</div>
@@ -261,18 +261,19 @@
 
 				</div><!--end sitebar-->
 
+				@if ($related_products->where('id', '!=', $product->id)->count() > 0)
 				<div class="single-advance-box col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="wrap-show-advance-info-box style-1 box-in-site">
 						<h3 class="title-box">Related Products</h3>
 						<div class="wrap-products">
 							<div class="products slide-carousel owl-carousel style-nav-1 equal-container" data-items="5" data-loop="false" data-nav="true" data-dots="false" data-responsive='{"0":{"items":"1"},"480":{"items":"2"},"768":{"items":"3"},"992":{"items":"3"},"1200":{"items":"5"}}' >
 
-                                @foreach ($related_products as $related_product)
+                                @foreach ($related_products->where('id', '!=', $product->id ) as $related_product)
                                     <div class="product product-style-2 equal-elem ">
                                         <div class="product-thumnail">
                                             <a href="{{route('product.details', $related_product->slug)}}">
                                                 <figure>
-                                                    <img src="{{asset('frontend/assets/images/products')}}/{{$related_product->image}}" width="214" height="214" alt="{{$related_product->slug}}">
+                                                    <img src="{{asset('storage/media/products/' .$related_product->image)}}" width="214" height="214" alt="{{$related_product->slug}}">
                                                 </figure>
                                             </a>
                                             <div class="group-flash">
@@ -285,7 +286,11 @@
                                         <div class="product-info">
                                             <a href="{{route('product.details', $related_product->slug)}}" class="product-name">
                                                 <span>{{$related_product->name}}</span></a>
-                                            <div class="wrap-price"><ins><p class="product-price">${{$related_product->sale_price}}</p></ins> <del><p class="product-price">${{$related_product->regular_price}}</p></del></div>
+                                            <div class="wrap-price">
+													<p class="product-price">
+														${{$related_product->regular_price}}
+													</p>
+												</div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -294,6 +299,7 @@
 						</div><!--End wrap-products-->
 					</div>
 				</div>
+			@endif
 
 			</div><!--end row-->
 
