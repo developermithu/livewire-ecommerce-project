@@ -56,7 +56,6 @@ class ShopComponent extends Component
         }
     }
 
-
     public function render()
     {
 
@@ -74,7 +73,6 @@ class ShopComponent extends Component
             $sale = Sale::find(1);
         }
 
-        // $products = Product::simplePaginate(9);
         $categories = Category::orderBy('name', 'asc')->get();
         return view('livewire.shop-component', compact('products', 'categories', 'sale'))->layout('layouts.frontend.base');
     }

@@ -165,6 +165,7 @@ return [
         // custom
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
+        Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -236,6 +237,7 @@ return [
         // custom
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+        'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
     ],
 
 ];

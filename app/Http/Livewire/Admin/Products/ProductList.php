@@ -22,7 +22,7 @@ class ProductList extends Component
 
     public function render()
     {
-        $products = Product::latest()->paginate(5);
+        $products = Product::with('category')->latest()->paginate(5);
         return view('livewire.admin.products.product-list', compact('products'))->layout('layouts.backend.app');
     }
 }

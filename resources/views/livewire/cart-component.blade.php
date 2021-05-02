@@ -9,6 +9,7 @@
 			</div>
 
 			<div class=" main-content-area">
+			@if (Cart::instance('cart')->count() > 0)
 				<div class="wrap-iten-in-cart">
 					@if (Session::has('success'))
 						<div class="alert alert-success">
@@ -16,7 +17,6 @@
 						</div>
 					@endif
 
-				@if (Cart::instance('cart')->count() > 0)
 					<h3 class="box-title">Products Name</h3>
 					<ul class="products-cart">
 
@@ -66,9 +66,6 @@
 						@endforeach
 
 					</ul>
-						@else
-								<h2 class="py-3 text-center text-danger"> No item available. </h2>
-				@endif
 				</div>
 
 				<div class="summary">
@@ -143,7 +140,7 @@
 						</div>
 						@endif
 			     @endif
-						<a class="btn btn-checkout" href="checkout.html">Check out</a>
+						<button class="btn btn-checkout" wire:click.prevent="checkout">Check out</button>
 					</div>
 
 					<div class="update-clear m-auto text-center">
@@ -155,6 +152,13 @@
 							</div>
 					</div>
 				</div>
+				@else
+				    <div class="text-center">
+						<h1> Your cart is empty ! </h1>
+						<p> Add item to it now </p>
+						<a href="/shop" class="btn btn-danger"> Shop Now </a>
+					</div>
+			@endif
 
 				{{-- Save For Later --}}
 				<div class="wrap-iten-in-cart" style="margin-top: 50px">
