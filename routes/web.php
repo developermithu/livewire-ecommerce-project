@@ -20,6 +20,7 @@ use App\Http\Livewire\ThankYou;
 use App\Http\Livewire\User\Orders\OrderList;
 use App\Http\Livewire\User\Orders\UserOrderDetails;
 use App\Http\Livewire\User\UserDashboard;
+use App\Http\Livewire\User\UserReview;
 use App\Http\Livewire\WishlistComponent;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Orders
     Route::get('/user/orders', OrderList::class)->name('user.orders');
     Route::get('/user/order/{order_id}', UserOrderDetails::class)->name('user.order.details');
+    Route::get('/user/review/{order_item_id}', UserReview::class)->name('user.review');
 });
 
 // Admin Dashboard

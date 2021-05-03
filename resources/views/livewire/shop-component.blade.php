@@ -97,9 +97,9 @@
 
 									{{-- Sale Price Thakle Sale Price Add to cart e jabe --}}
 										@if ($product->sale_price> 0 && $sale->status == 1 && $sale->sale_time > Carbon\Carbon::now() )
-											<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->sale_price}})">Add to Cart</a>
+											<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->sale_price}})" wire:loading.attr="disabled">Add to Cart</a>
 											@else
-											<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add to Cart</a>
+											<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})" wire:loading.attr="disabled">Add to Cart</a>
 										@endif
 
 										<div class="product-wishlist">

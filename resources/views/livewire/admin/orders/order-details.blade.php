@@ -8,6 +8,60 @@
        </a>
      </div>
 
+     <div class="col-md-12 ">
+      <div class="card">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon w-100">
+            Order Details
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">Order Id</th>
+                  <th class="text-center">Order Date</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">
+                    @if ($order->status == 'delivered')
+                        Delivered Date
+                    @elseif ($order->status == 'canceled')
+                        Canceled Date
+                    @endif
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                      <tr>
+                          <td class="text-center">{{$order->id}}</td>
+                          <td class="text-center">{{$order->created_at}}</td>
+                          @if ($order->status == 'delivered')
+                            <td class="text-center text-success">
+                             {{$order->status}}
+                            </td>
+                            @elseif ($order->status == 'canceled')
+                            <td class="text-center text-danger">
+                            {{$order->status}}
+                            </td>
+                          @endif
+                          @if ($order->status == 'delivered')
+                            <td class="text-center text-success">
+                             {{$order->delevered_date}}
+                            </td>
+                            @elseif ($order->status == 'canceled')
+                            <td class="text-center text-danger">
+                            {{$order->canceled_date}}
+                            </td>
+                          @endif
+                      </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">

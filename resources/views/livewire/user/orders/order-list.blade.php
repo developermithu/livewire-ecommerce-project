@@ -1,5 +1,14 @@
 <div>
     <div class="container" style="padding: 30px 0">
+        
+            @if (Session::has('success'))
+                <div class="row">
+                        <div class="col-md-12">
+                        <div class="alert alert-success">{{Session::get('success')}}</div>
+                    </div>
+                </div>
+            @endif
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -32,19 +41,19 @@
                                     <td>{{$order->mobile}}</td>
                                     <td>
                                         @if ($order->status == 'ordered')
-                                        <button class="badge badge-default">{{$order->status}}</button>
+                                        <button class="btn text-capitalize btn-sm btn-secondary">{{$order->status}}</button>
                                         @elseif ($order->status == 'delivered')
-                                        <button class="badge badge-success">{{$order->status}}</button>
+                                        <button class="btn text-capitalize btn-sm btn-success">{{$order->status}}</button>
                                         @elseif ($order->status == 'canceled')
-                                        <button class="badge badge-danger">{{$order->status}}</button>
+                                        <button class="btn text-capitalize btn-sm btn-danger">{{$order->status}}</button>
                                         @endif   
                                     </td>
                                     <td>{{Carbon\Carbon::parse($order->created_at)->format('Y-m-d')}}</td>
 
                                     <td class="td-actions">
-                                    <a href="{{route('user.order.details', $order->id)}}" class="btn btn-info">
-                                        Details
-                                    </a>
+                                        <a href="{{route('user.order.details', $order->id)}}" class="btn btn-info">
+                                            Details
+                                        </a>
                                     </td>
                                 </tr>
                              @endforeach

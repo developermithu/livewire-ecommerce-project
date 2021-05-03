@@ -1,15 +1,61 @@
 <div>
     <div class="container" style="padding: 30px 0">
+
+        <div class="row">
+            <div class="col-md-12">
+                @if (Session::has('success'))
+                    <div class="alert alert-success alert-dismissible show" role="alert">
+                        {{Session::get('success')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+            @endif
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-md-6"> Order List </div>
+                            <div class="col-md-6"> Order Details </div>
                             <div class="col-md-6">  
-                                <a href="{{route('user.orders')}}" class="btn btn-danger pull-right"> All Orders </a>
+                                <a href="{{route('user.orders')}}" class="btn btn-info pull-right"> All Orders</a>
+                                @if ($order->status == 'ordered')
+                                <a href="#" wire:click.prevent="cancelOrder" class="btn btn-danger pull-right" style="margin-right: 12px">Cancel Order</a>
+                                @endif
                              </div>
                         </div>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <tr>
+                                <th>Order Id</th>
+                                <td>{{$order->id}}</td>
+                                <th>Order Date</th>
+                                <td>{{$order->created_at}}</td>
+                                <th>Order Status</th>
+                                <td>{{$order->status}}</td>
+                                @if ($order->status == 'delivered')
+                                    <th class="text-success">Delivery Date</th>
+                                    <td>{{$order->delevered_date}}</td>
+                                @elseif ($order->status == 'canceled')
+                                    <th class="text-danger">Canceled Date</th>
+                                    <td>{{$order->canceled_date}}</td>  
+                                @endif
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Order List 
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped">
@@ -29,7 +75,10 @@
                                         <img src="{{asset('storage/media/products/' .$orderItem->product->image)}}" alt="products" width="100px">
                                     </td>
                                     <td class="text-center">
-                                        <a href="{{route('product.details', $orderItem->product->slug)}}">{{$orderItem->product->name}}</a>
+                                        <a href="{{route('product.details', $orderItem->product->slug)}}">{{$orderItem->product->name}}</a> <br><br>
+                                        @if ($order->status == 'delivered' && $orderItem->review_status == false)
+                                           <a href="{{route('user.review', $orderItem->id)}}" class="btn btn-sm btn-info">Write Review</a>
+                                        @endif
                                     </td>
                                     <td class="text-center">${{$orderItem->price}}</td>
                                     <td class="text-center">{{$orderItem->qty}}</td>

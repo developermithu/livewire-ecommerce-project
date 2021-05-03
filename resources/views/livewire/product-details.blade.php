@@ -26,14 +26,18 @@
 							</div>
 						</div>
 						<div class="detail-info">
-							<div class="product-rating">
+							{{-- <div class="product-rating">
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                <a href="#" class="count-review">(05 review)</a>
-                            </div>
+                                @foreach($product->orderItems as $item)
+								@if ($item->review_status == true)
+								<a href="#" class="count-review">({{$item->reviews->count()}} review)</a>
+								@endif
+								@endforeach
+                            </div> --}}
                             <h2 class="product-name"> {{ $product->name }} </h2>
                             <div class="short-desc">
                                 {{ $product->short_description }} 
@@ -68,9 +72,9 @@
 
 							{{-- Sale Price Thakle Sale Price Add to cart e jabe --}}
 							@if ($product->sale_price> 0 && $sale->status == 1 && $sale->sale_time > Carbon\Carbon::now() )
-								<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->sale_price}})">Add to Cart</a>
+								<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->sale_price}})" wire:loading.attr="disabled">Add to Cart <span wire:loading>....</span></a>
 								@else
-								<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add to Cart</a>
+								<a class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})" wire:loading.attr="disabled">Add to Cart <span wire:loading>....</span></a>
 							@endif
 
                                 <div class="wrap-btn">

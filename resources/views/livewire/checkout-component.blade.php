@@ -234,7 +234,8 @@
 							<p class="summary-info grand-total"><span>Grand Total</span> <span class="grand-total-price">${{Session::get('checkout')['total']}}</span></p>
 							@endif
 
-							<button type="submit" class="btn btn-medium">Place order now</button>
+							<button type="submit" class="btn btn-medium" wire:loading.remove>Place Order </button>
+							<button type="submit" class="btn btn-medium" wire:loading>Submitting...</button>
 						</div>
 						<div class="summary-item shipping-method">
 							<h4 class="title-box f-title">Shipping method</h4>

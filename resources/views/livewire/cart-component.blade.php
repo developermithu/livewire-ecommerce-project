@@ -140,7 +140,8 @@
 						</div>
 						@endif
 			     @endif
-						<button class="btn btn-checkout" wire:click.prevent="checkout">Check out</button>
+						<button class="btn btn-checkout" wire:click.prevent="checkout" wire:loading.remove>Check out</button>
+						<button class="btn btn-checkout" wire:click.prevent="checkout" wire:loading>Proccessing...</button>
 					</div>
 
 					<div class="update-clear m-auto text-center">

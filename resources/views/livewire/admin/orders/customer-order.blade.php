@@ -1,4 +1,17 @@
 <div>
+    <div class="row">
+      <div class="col-md-12">
+         @if (Session::has('success'))
+             <div class="alert alert-success alert-dismissible show" role="alert">
+                {{Session::get('success')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+             </div>
+         @endif
+      </div>
+    </div>
+
       <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -13,8 +26,7 @@
                     <thead>
                       <tr class="text-rose">
                         <th class="text-center">Order No.</th>
-                        <th class="text-center">Discount</th>
-                        <th class="text-center">Total</th>     
+                        <th class="text-center">Total Price</th>     
                         <th class="text-center">Name</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Mobile</th>
@@ -24,10 +36,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($orders as $key=>$order)
+                      @foreach ($orders as $order)
                       <tr>
-                        <td class="text-center">{{$key + 1}}</td>
-                        <td>${{$order->discount}}</td>
+                        <td class="text-center">{{$order->id}}</td>
                         <td>${{$order->total}}</td>
                         <td>{{$order->name}}</td>
                         <td>{{$order->email}}</td>
@@ -43,14 +54,27 @@
                         </td>
                         <td>{{Carbon\Carbon::parse($order->created_at)->format('Y-m-d')}}</td>
 
-                        <td class="td-actions">
+                        <td class="td-actions d-flex ">
+                         <div>
                           <a href="{{route('admin.orders.details', $order->id)}}" class="btn btn-primary">
                             <i class="material-icons">visibility</i>
-                          </a> &nbsp;
+                          </a>
+                        </div> &nbsp; &nbsp;
 
-                          <button wire:click.prevent="destroy({{$order->id}})" type="button" class="btn btn-rose">
-                            <i class="material-icons">delete</i>
-                          </button>
+                          <div class="dropdown pull-left">
+                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="material-icons">build</i>
+                                    <span class="caret"></span>
+                                  <div class="ripple-container"></div>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-right" role="menu" x-placement="bottom-end" style="position: absolute; top: 45px; left: -69px; will-change: top, left;">
+                                  <li>
+                                    <a href="#" wire:click.prevent="updateOrderStatus({{$order->id}}, 'delivered')" >Delivered</a>
+                                    <a href="#" wire:click.prevent="updateOrderStatus({{$order->id}}, 'canceled')" >Canceled</a>
+                                  </li>
+                              </ul>
+                          </div>
+
                         </td>
                       </tr>
                       @endforeach
