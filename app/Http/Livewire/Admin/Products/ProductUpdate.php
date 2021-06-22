@@ -104,7 +104,7 @@ class ProductUpdate extends Component
 
         if ($this->newImage) {
             $imgName = uniqid() . '.' . $this->newImage->extension();
-            $this->newImage->storeAs('media/products', $imgName, 'public');
+            $this->newImage->storeAs('/media/products', $imgName, 'public');
             $product->image = $imgName;
         }
 
